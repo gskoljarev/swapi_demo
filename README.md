@@ -7,6 +7,7 @@
   - Linux: `source .venv/bin/activate`
   - Windows: `.\.venv\Scripts\activate`
 - install requirements: `pip install -r requirements.txt`
+- run migrations: `python manage.py migrate`
 
 
 ## Run
