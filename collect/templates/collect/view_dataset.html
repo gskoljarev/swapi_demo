@@ -1,0 +1,27 @@
+{% extends "collect/base.html" %}
+
+{% block content %}
+  <h4>{{ dataset.filename }}</h4>
+  <a href="{% url 'view_datasets' %}">< back</a>
+  |
+  <a href="{% url 'view_dataset_value_count' dataset.filename %}">value count ></a>
+  <table>
+    <thead>
+      <tr>
+        {% for field in fields %}
+          <th>{{ field }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data %}
+        <tr>
+          {% for value in row %}
+            <td>{{ value }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a class="button" href="{% url 'view_dataset' dataset.filename %}?items={{ items|add:10 }}">Load more</a>
+{% endblock %}

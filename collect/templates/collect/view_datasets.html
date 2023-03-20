@@ -1,0 +1,16 @@
+{% extends "collect/base.html" %}
+
+{% block content %}
+  <h4>Downloaded Datasets</h4>
+  <form method="post" action="{% url 'view_datasets' %}">
+    {% csrf_token %}
+    <button type="submit">Fetch</button>
+  </form>
+  <ul>
+    {% for dataset in datasets %}
+      <li><a href="{% url 'view_dataset' dataset.filename %}">{{ dataset.created_at }}</a></li>
+    {% empty %}
+      <li>No datasets downloaded yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

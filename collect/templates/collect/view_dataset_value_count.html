@@ -1,0 +1,51 @@
+{% extends "collect/base.html" %}
+
+{% block scripts %}
+<script>
+  function handleClick(checkbox) {
+    checkbox.setAttribute('checked', checkbox.checked);
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let checkedValues = [];
+        for (let i = 0; i < checkboxes.length; i++) {
+      if (checkboxes[i].checked) {
+        checkedValues.push(checkboxes[i].value);
+      }
+    }
+    let checkedValuesString = checkedValues.join(',');
+    console.log(checkedValuesString);
+    window.location.replace("{% url 'view_dataset_value_count' dataset.filename %}?columns=" + checkedValuesString);
+  }
+</script>
+{% endblock %}
+
+{% block content %}
+  <h4>{{ dataset.filename }}</h4>
+  <a href="{% url 'view_dataset' dataset.filename %}">< back</a>
+  <div class="container">
+    <div class="row">
+      {% for field in fields %}
+      <div class="column">
+        <label><input type="checkbox" value="{{ field }}" {% if field in selected_fields %}checked="true"{% endif %}onclick='handleClick(this);'>{{ field }}</label>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        {% for field in selected_fields %}
+          <th>{{ field }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data %}
+        <tr>
+          {% for value in row %}
+            <td>{{ value }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
